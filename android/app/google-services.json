@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "801552591483",
+    "project_id": "cvproject-dcce1",
+    "storage_bucket": "cvproject-dcce1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:801552591483:android:8303f32f387d9defc150de",
+        "android_client_info": {
+          "package_name": "com.example.cv_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBb4uhj24U-nErqYHvUA6MC1hFjGm44dpI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

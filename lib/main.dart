@@ -1,9 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+
 import 'firebase_options.dart';
 import 'screens/login_screen.dart';
 import 'screens/register_screen.dart';
-import 'screens/home_screen.dart';
+import 'screens/cv_list_screen.dart'; // NEW
 import 'services/auth_service.dart';
 
 void main() async {
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/login': (_) => const LoginScreen(),
         '/register': (_) => const RegisterScreen(),
-        '/home': (_) => const HomeScreen(),
+        '/home': (_) => const CvListScreen(), // UPDATED
       },
       home: const AuthGate(),
     );
@@ -51,7 +52,7 @@ class AuthGate extends StatelessWidget {
 
         // Logged in
         if (snapshot.hasData) {
-          return const HomeScreen();
+          return const CvListScreen(); // UPDATED
         }
 
         // Not logged in

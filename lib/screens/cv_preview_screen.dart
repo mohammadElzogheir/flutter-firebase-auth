@@ -9,85 +9,76 @@ class CvPreviewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('CV Preview'),
-      ),
+      appBar: AppBar(title: const Text('CV Preview')),
       body: Padding(
         padding: const EdgeInsets.all(16),
-        child: cv.templateId == 't2'
-            ? _classicTemplate()
-            : cv.templateId == 't3'
-                ? _creativeTemplate()
-                : cv.templateId == 't4'
-                    ? _simpleTemplate()
-                    : _modernTemplate(),
-      ),
-    );
-  }
+        child: ListView(
+          children: [
+            Text(cv.fullName, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 6),
+            Text(cv.jobTitle, style: const TextStyle(fontSize: 16)),
+            const SizedBox(height: 10),
+            Text('Email: ${cv.email}'),
+            Text('Phone: ${cv.phone}'),
+            const Divider(height: 30),
 
-  Widget _modernTemplate() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(cv.fullName, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-        const SizedBox(height: 6),
-        Text(cv.jobTitle, style: const TextStyle(fontSize: 16)),
-        const Divider(height: 30),
-        Text('Email: ${cv.email}'),
-        Text('Phone: ${cv.phone}'),
-      ],
-    );
-  }
+            if (cv.summary.trim().isNotEmpty) ...[
+              const Text('Summary', style: TextStyle(fontWeight: FontWeight.bold)),
+              const SizedBox(height: 8),
+              Text(cv.summary),
+              const SizedBox(height: 16),
+            ],
 
-  Widget _classicTemplate() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(cv.fullName, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-        const SizedBox(height: 4),
-        Text(cv.jobTitle),
-        const SizedBox(height: 20),
-        Text('Contact Information', style: const TextStyle(fontWeight: FontWeight.bold)),
-        const SizedBox(height: 6),
-        Text('Email: ${cv.email}'),
-        Text('Phone: ${cv.phone}'),
-      ],
-    );
-  }
+            if (cv.skills.isNotEmpty) ...[
+              const Text('Skills', style: TextStyle(fontWeight: FontWeight.bold)),
+              const SizedBox(height: 8),
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: cv.skills.map((s) => Chip(label: Text(s))).toList(),
+              ),
+              const SizedBox(height: 16),
+            ],
 
-  Widget _creativeTemplate() {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.deepPurple.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(cv.fullName, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.deepPurple)),
-          const SizedBox(height: 6),
-          Text(cv.jobTitle, style: const TextStyle(color: Colors.deepPurple)),
-          const SizedBox(height: 20),
-          Text('Email: ${cv.email}'),
-          Text('Phone: ${cv.phone}'),
-        ],
-      ),
-    );
-  }
+            if (cv.languages.isNotEmpty) ...[
+              const Text('Languages', style: TextStyle(fontWeight: FontWeight.bold)),
+              const SizedBox(height: 8),
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: cv.languages.map((s) => Chip(label: Text(s))).toList(),
+              ),
+              const SizedBox(height: 16),
+            ],
 
-  Widget _simpleTemplate() {
-    return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(cv.fullName, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 8),
-          Text(cv.jobTitle),
-          const SizedBox(height: 20),
-          Text(cv.email),
-          Text(cv.phone),
-        ],
+            if (cv.experiences.isNotEmpty) ...[
+              const Text('Work Experience', style: TextStyle(fontWeight: FontWeight.bold)),
+              const SizedBox(height: 8),
+              ...cv.experiences.map((ex) {
+                return Card(
+                  child: ListTile(
+                    title: Text('${ex['role'] ?? ''} - ${ex['company'] ?? ''}'),
+                    subtitle: Text('${ex['from'] ?? ''}  →  ${ex['to'] ?? ''}'),
+                  ),
+                );
+              }),
+              const SizedBox(height: 16),
+            ],
+
+            if (cv.education.isNotEmpty) ...[
+              const Text('Education', style: TextStyle(fontWeight: FontWeight.bold)),
+              const SizedBox(height: 8),
+              ...cv.education.map((ed) {
+                return Card(
+                  child: ListTile(
+                    title: Text(ed['degree'] ?? ''),
+                    subtitle: Text('${ed['school'] ?? ''}  (${ed['year'] ?? ''})'),
+                  ),
+                );
+              }),
+            ],
+          ],
+        ),
       ),
     );
   }
